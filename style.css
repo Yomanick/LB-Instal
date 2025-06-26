@@ -639,6 +639,7 @@ main {
     .coverage-map {
         flex: 0 0 100%; /* Na mniejszych ekranach jedna pod drugą */
         min-width: 100%;
+        padding-left:0;
     }
     
     .coverage-map {
@@ -660,6 +661,25 @@ main {
     }
     
 }
+@media (max-width: 768px) {
+    .coverage-text {
+        padding-left: 0;
+        flex: 0 0 100%; /* Na mniejszych ekranach jedna pod drugą */
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .coverage-list {
+        font-size: 1.2rem;
+    }
+
+    .coverage-list li {
+        font-size: 1.1rem;
+    }
+}
+
+
 
 /* Galeria */
 #galeria img {

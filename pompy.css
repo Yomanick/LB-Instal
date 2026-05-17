@@ -1,0 +1,468 @@
+/* --- ZMIENNE I PODSTAWY --- */
+:root {
+    --dark: #0a1118;
+    --blue: #00b7ff;
+    --white: #ffffff;
+    --gray: #f4f7f9;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    overflow-x: hidden;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
+/* Layout Helpers */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 100px 0; }
+.bg-dark { background: var(--dark); color: white; }
+.text-blue { color: var(--blue); }
+.text-center { text-align: center; }
+
+
+/* HEADER V2 */
+.header-v2 { background: #fff; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+.navbar-v2 { display: flex; justify-content: space-between; align-items: center; }
+.logo-v2 img { height: 45px; }
+.nav-links-v2 { display: flex; list-style: none; gap: 30px; align-items: center; }
+.nav-links-v2 a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+.nav-cta { background: var(--blue); color: #fff !important; padding: 10px 20px; border-radius: 50px; margin-bottom: 30px; }
+
+/* --- UKŁAD HERO (TEKST LEWO, FOTO PRAWO) --- */
+.pompy-hero { 
+    padding: 150px 0 100px 0; 
+    background: radial-gradient(circle at top right, #e3f2fd, #fff);
+    text-align: left;
+}
+
+.hero-split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Tekst ma optymalnie więcej miejsca */
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-content {
+    grid-column: 1;
+}
+
+.hero-image-wrapper {
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* TWOJE ORYGINALNE WIELKOŚCI TEKSTU */
+.pompy-hero h1 { 
+    font-size: clamp(2.5rem, 5vw, 4rem); 
+    font-weight: 800; 
+    line-height: 1.1; 
+    margin: 20px 0; 
+}
+
+.pompy-hero p { 
+    font-size: 1.2rem; 
+    color: #475569; /* Czytelny, ciemnoszary kolor dla profesjonalnego wyglądu */
+    max-width: 600px; 
+}
+
+/* RESPONSYWNOŚĆ (NA MOBILE OBRAZEK TRAFIA POD TEKST) */
+@media (max-width: 992px) {
+    .hero-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .hero-content {
+        grid-column: 1;
+    }
+
+    .hero-image-wrapper {
+        grid-column: 1;
+    }
+}
+
+
+/* --- SLIDER DOTACJE (MOBILE ONLY) --- */
+
+/* Struktura slidera - widoczna tylko na mobile */
+@media (min-width: 993px) {
+    .slider-arrows { display: none; } /* Ukryj strzałki na komputerach */
+}
+
+@media (max-width: 992px) {
+    .dotacje-slider-viewport {
+        position: relative;
+        overflow: hidden; /* Ukrywa drugą kartę, dopóki jej nie przewiniemy */
+        width: 100%;
+        padding: 0 5px;   /* Bezpieczny margines od krawędzi ekranu */
+    }
+
+    .slider-track {
+        display: flex !important;
+        grid-template-columns: none !important;
+        gap: 20px !important;
+        margin-top: 30px !important;
+        transition: transform 0.4s ease-in-out;
+        width: 100%; /* Track trzyma szerokość kontenera nadrzędnego */
+    }
+
+    .slider-item {
+        flex: 0 0 100% !important; /* Wymusza, by każda karta miała dokładnie 100% szerokości ekranu */
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+        padding: 25px !important;  /* Mniejszy padding wewnętrzny, żeby tekst się mieścił */
+        border-radius: 20px !important;
+    }
+
+    /* Zabezpieczenie logo programów przed rozpychaniem kart */
+    .program-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .program-header img {
+        max-width: 100px !important;
+        height: auto !important;
+        object-fit: contain;
+    }
+
+    .program-header h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Nawigacja pod sliderem - czysto, bezpiecznie, bez najeżdżania na tekst */
+    .slider-arrows {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .slider-arrow {
+        background: var(--blue);
+        color: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .slider-arrow:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Intro & Brands */
+.intro-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px; align-items: center; }
+.brands-logos { 
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; 
+    filter: grayscale(1); opacity: 0.6; transition: 0.3s;
+}
+.brands-logos:hover { filter: grayscale(0); opacity: 1; }
+.brands-logos img { width: 100%; height: auto; object-fit: contain; padding: 10px; }
+.small-title { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; color: var(--grey); }
+
+/* Steps Section */
+.section-header { margin-bottom: 60px; }
+.section-header h2 { font-size: 2.5rem; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+.step-card { 
+    background: #252525; padding: 40px; border-radius: 20px; 
+    transition: transform 0.3s ease; position: relative; overflow: hidden;
+}
+.step-card:hover { transform: translateY(-10px); }
+.step-num { font-size: 4rem; font-weight: 800; color: rgba(255,255,255,0.05); position: absolute; top: 10px; right: 20px; }
+
+/* Dotacje */
+.dotacje-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; }
+.program-card { background: white; padding: 50px; border-radius: 30px; border: 1px solid #eef2f6; box-shadow: 0 15px 40px rgba(0,0,0,0.03); }
+.program-header { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; }
+.program-header img { height: 50px; }
+.benefit-list { list-style: none; padding: 0; }
+.benefit-list li { margin-bottom: 12px; padding-left: 25px; position: relative; }
+.benefit-list li::before { content: '✓'; color: var(--blue); position: absolute; left: 0; font-weight: bold; }
+
+/* Accordion (FAQ) */
+.accordion { max-width: 800px; margin: 0 auto; }
+details { background: #fff; border-bottom: 1px solid #eee; padding: 15px 0; cursor: pointer; }
+summary { 
+    list-style: none; display: flex; justify-content: space-between; align-items: center;
+    font-weight: 600; font-size: 1.1rem; padding: 10px 0;
+}
+summary::after { content: '+'; font-size: 1.5rem; color: var(--blue); transition: 0.3s; }
+details[open] summary::after { transform: rotate(45deg); }
+.content { padding: 15px 0; color: var(--grey); }
+
+/* Mobile */
+@media (max-width: 992px) {
+    .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+    .programy-logos { flex-direction: column; }
+    .section { padding: 60px 0; }
+}
+
+
+.footer-v2 {
+    background: var(--dark); /* Korzystamy ze zmiennej z V2 */
+    color: #ffffff;
+    padding: 100px 0 40px 0;
+    margin-top: 0;
+}
+
+.footer-v2-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-v2-logo {
+    height: 50px;
+    margin-bottom: 30px;
+    filter: brightness(0) invert(1); /* Logo na biało */
+}
+
+.footer-v2-brand p {
+    color: #94a3b8; /* Delikatny szary niebieski */
+    line-height: 1.8;
+    font-size: 0.95rem;
+    max-width: 320px;
+}
+
+.footer-v2-links h4, 
+.footer-v2-contact h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--blue);
+}
+
+.footer-v2-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-v2-links ul li {
+    margin-bottom: 15px;
+}
+
+.footer-v2-links ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.footer-v2-links ul li a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.c-item {
+    margin-bottom: 25px;
+}
+
+.c-item span {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.c-item a, .c-item p {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.c-item a:hover {
+    color: var(--blue);
+}
+
+/* Dolny pasek */
+.footer-v2-bottom {
+    padding-top: 40px;
+    text-align: center;
+}
+
+.footer-v2-bottom p {
+    color: #475569;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Responsywność dla urządzeń mobilnych */
+@media (max-width: 992px) {
+    .footer-v2-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-v2-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 60px;
+    }
+    .footer-v2-brand p {
+        margin: 0 auto;
+    }
+    .footer-v2-links ul li a:hover {
+        padding-left: 0;
+    }
+}
+
+/* Styl paska górnego kontaktowego */
+.top-bar-v2 {
+    background-color: #0a1118;
+    color: #ffffff;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-contact {
+    display: flex;
+    gap: 25px;
+}
+
+.top-item {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Odstęp między ikoną a tekstem */
+    transition: opacity 0.3s ease;
+}
+
+.top-item:hover {
+    opacity: 0.8;
+}
+
+/* Stylizacja Twoich ikon PNG */
+.top-icon {
+    width: 18px;  /* Szerokość ikony */
+    height: 18px; /* Wysokość ikony */
+    object-fit: contain;
+    /* Jeśli Twoje ikony są czarne, a tło ciemne, odkomentuj poniższą linię, by je wybielić: */
+    /* filter: brightness(0) invert(1); */
+}
+
+.top-hours {
+    font-weight: 300;
+    opacity: 0.7;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .top-hours {
+        display: none; /* Ukrywamy godziny na mobile dla większej przejrzystości */
+    }
+    
+    .top-bar-content {
+        justify-content: center;
+    }
+    
+    .top-contact {
+        gap: 15px;
+    }
+    
+    .top-item .text {
+        font-size: 0.75rem;
+    }
+}
+
+/* HAMBURGER I MENU */
+.hamburger-v2 {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+}
+
+.hamburger-v2 .bar {
+    width: 30px;
+    height: 3px;
+    background-color: var(--dark);
+    transition: all 0.3s linear;
+}
+
+@media (max-width: 992px) {
+    .hamburger-v2 { display: flex; }
+    
+    .nav-menu-v2 {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #fff;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: 0.4s;
+        padding-top: 80px;
+    }
+
+    .nav-menu-v2.active { right: 0; }
+    
+    .nav-links-v2 {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding-left: 0;    /* Usuwa domyślne wcięcie listy */
+        margin: 0;          /* Usuwa domyślne marginesy */
+        width: 100%;
+    }
+
+    .nav-links-v2 li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hamburger-v2.active .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger-v2.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger-v2.active .bar:nth-child(3) { transform: rotate(-45deg) translate(7px, -8px); }
+}

@@ -1,0 +1,425 @@
+/* --- ZMIENNE I PODSTAWY --- */
+:root {
+    --dark: #0a1118;
+    --blue: #00b7ff;
+    --white: #ffffff;
+    --gray: #f4f7f9;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    overflow-x: hidden;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
+/* Layout Helpers */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 100px 0; }
+.bg-dark { background: var(--dark); color: white; }
+.text-blue { color: var(--blue); }
+.text-center { text-align: center; }
+
+
+/* HEADER V2 */
+.header-v2 { background: #fff; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+.navbar-v2 { display: flex; justify-content: space-between; align-items: center; }
+.logo-v2 img { height: 45px; }
+.nav-links-v2 { display: flex; list-style: none; gap: 30px; align-items: center; }
+.nav-links-v2 a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+.nav-cta { background: var(--blue); color: #fff !important; padding: 10px 20px; border-radius: 50px; margin-bottom: 30px; }
+
+
+
+/* Small Hero */
+.realizacje-hero { 
+    padding: 100px 0 60px 0; 
+    background: #f8f9fa; 
+    border-bottom: 1px solid #eee;
+}
+.badge { background: #d0e3ff; color: var(--blue); padding: 5px 12px; border-radius: 50px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; }
+.realizacje-hero h1 { font-size: 3rem; font-weight: 800; margin: 15px 0; letter-spacing: -1px; }
+.realizacje-hero p { color: #666; font-size: 1.1rem; }
+
+/* Galeria Grid */
+.realizacje-grid {
+    width: 100%;
+    padding: 60px 0; /* Odstęp od góry i dołu, żeby nie wchodziło na tekst/menu */
+    background: #ffffff; /* Białe tło zamiast czarnego - usuwa brzydkie dziury */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 równe kolumny */
+    gap: 20px; /* Elegancki odstęp między kafelkami */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.photo-box {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Wymusza idealny kwadrat dla każdego zdjęcia */
+    overflow: hidden;
+    position: relative;
+    border-radius: 0 !important; /* Całkowicie ostre krawędzie */
+    border: 1px solid #e2e8f0; /* Subtelna ramka oddzielająca jasne zdjęcia */
+    background: #f8fafc;
+}
+
+.photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Kadruje zdjęcia do kwadratu bez zniekształceń */
+    display: block;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Delikatny efekt po najechaniu myszką */
+.photo-box:hover img {
+    transform: scale(1.04);
+    filter: brightness(1.05);
+}
+
+/* Łatanie dziury: 17-ste zdjęcie rozciąga się na dół, żeby nie było czarnego/pustego kafelka */
+.photo-box:nth-child(17) {
+    grid-column: span 4; 
+    aspect-ratio: 4 / 1; /* Szeroki, estetyczny pas na dole */
+}
+
+/* --- RESPONSYWNOŚĆ (EKRANY LAPTOPÓW, TABLETÓW I TELEFONÓW) --- */
+
+/* Laptopy (ok. 1376px) */
+@media (max-width: 1400px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    .photo-box:nth-child(17) {
+        grid-column: span 4;
+        aspect-ratio: 4 / 1;
+    }
+}
+
+/* Tablety (3 kolumny) */
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .photo-box:nth-child(17) {
+        grid-column: span 3;
+        aspect-ratio: 3 / 1;
+    }
+}
+
+/* Telefony (2 kolumny) */
+@media (max-width: 640px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .photo-box:nth-child(17) {
+        grid-column: span 2;
+        aspect-ratio: 2 / 1;
+    }
+}
+
+/*lightbox*/
+.gallery-trigger {
+    cursor: pointer;
+}
+
+/* MODAL / LIGHTBOX BACKGROUND */
+.lightbox {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    padding-top: 40px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(10, 17, 24, 0.95); /* Ciemne eleganckie tło */
+    align-items: center;
+    justify-content: center;
+}
+
+/* DUŻE ZDJĘCIE */
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85vh;
+    object-fit: contain;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* PRZYCISK ZAMKNIĘCIA (X) */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.lightbox-close:hover {
+    color: var(--blue);
+}
+
+/* Blokada przewijania strony pod spodem, gdy galeria jest otwarta */
+body.lightbox-open {
+    overflow: hidden;
+}
+
+.footer-v2 {
+    background: var(--dark); /* Korzystamy ze zmiennej z V2 */
+    color: #ffffff;
+    padding: 100px 0 40px 0;
+    margin-top: 0;
+}
+
+.footer-v2-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-v2-logo {
+    height: 50px;
+    margin-bottom: 30px;
+    filter: brightness(0) invert(1); /* Logo na biało */
+}
+
+.footer-v2-brand p {
+    color: #94a3b8; /* Delikatny szary niebieski */
+    line-height: 1.8;
+    font-size: 0.95rem;
+    max-width: 320px;
+}
+
+.footer-v2-links h4, 
+.footer-v2-contact h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--blue);
+}
+
+.footer-v2-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-v2-links ul li {
+    margin-bottom: 15px;
+}
+
+.footer-v2-links ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.footer-v2-links ul li a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.c-item {
+    margin-bottom: 25px;
+}
+
+.c-item span {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.c-item a, .c-item p {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.c-item a:hover {
+    color: var(--blue);
+}
+
+/* Dolny pasek */
+.footer-v2-bottom {
+    padding-top: 40px;
+    text-align: center;
+}
+
+.footer-v2-bottom p {
+    color: #475569;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Responsywność dla urządzeń mobilnych */
+@media (max-width: 992px) {
+    .footer-v2-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-v2-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 60px;
+    }
+    .footer-v2-brand p {
+        margin: 0 auto;
+    }
+    .footer-v2-links ul li a:hover {
+        padding-left: 0;
+    }
+}
+
+/* Styl paska górnego kontaktowego */
+.top-bar-v2 {
+    background-color: #0a1118;
+    color: #ffffff;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-contact {
+    display: flex;
+    gap: 25px;
+}
+
+.top-item {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Odstęp między ikoną a tekstem */
+    transition: opacity 0.3s ease;
+}
+
+.top-item:hover {
+    opacity: 0.8;
+}
+
+/* Stylizacja Twoich ikon PNG */
+.top-icon {
+    width: 18px;  /* Szerokość ikony */
+    height: 18px; /* Wysokość ikony */
+    object-fit: contain;
+    /* Jeśli Twoje ikony są czarne, a tło ciemne, odkomentuj poniższą linię, by je wybielić: */
+    /* filter: brightness(0) invert(1); */
+}
+
+.top-hours {
+    font-weight: 300;
+    opacity: 0.7;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .top-hours {
+        display: none; /* Ukrywamy godziny na mobile dla większej przejrzystości */
+    }
+    
+    .top-bar-content {
+        justify-content: center;
+    }
+    
+    .top-contact {
+        gap: 15px;
+    }
+    
+    .top-item .text {
+        font-size: 0.75rem;
+    }
+}
+
+/* HAMBURGER I MENU */
+.hamburger-v2 {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+}
+
+.hamburger-v2 .bar {
+    width: 30px;
+    height: 3px;
+    background-color: var(--dark);
+    transition: all 0.3s linear;
+}
+
+@media (max-width: 992px) {
+    .hamburger-v2 { display: flex; }
+    
+    .nav-menu-v2 {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #fff;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: 0.4s;
+        padding-top: 80px;
+    }
+
+    .nav-menu-v2.active { right: 0; }
+    
+    .nav-links-v2 {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding-left: 0;    /* Usuwa domyślne wcięcie listy */
+        margin: 0;          /* Usuwa domyślne marginesy */
+        width: 100%;
+    }
+
+    .nav-links-v2 li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hamburger-v2.active .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger-v2.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger-v2.active .bar:nth-child(3) { transform: rotate(-45deg) translate(7px, -8px); }
+}
